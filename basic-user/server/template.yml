@@ -1,0 +1,55 @@
+preAuthorizer: auth.preAuthorizer
+init: index.init
+getState: index.getState
+methods:
+
+    - method: signin
+      tag: test
+      sync: true
+      steps:
+          - id: validateCredentials
+            handler: auth.validateCredentials
+          - id: generateToken
+            handler: auth.generateToken
+      flow:
+
+          - direction:
+                - validateCredentials
+                - generateToken
+          - id: gotoInvalidCredentials
+            direction:
+                - validateCredentials
+                - invalidCredentials
+
+    - method: signup
+      tag: test
+      sync: true
+      steps:
+          - id: lookupUser
+            handler: auth.lookupUser
+          - id: userAlreadyExists
+          - id: createUser
+            handler: auth.createUser
+          - id: generateToken
+            handler: auth.generateToken
+      flow:
+
+          - direction:
+                - lookupUser
+                - createUser
+          - direction:
+                - createUser
+                - generateToken
+          - id: gotoUserAlreadyExists
+            direction:
+                - lookupUser
+                - userAlreadyExists                
+
+
+    - method: updateProfile
+      tag: test
+      sync: true
+      steps:
+          - id: updateProfile
+            handler: profile.update
+      
