@@ -1,0 +1,24 @@
+preAuthorizer: index.preAuthorizer
+init: index.init
+getState: index.getState
+methods:
+    - method: add
+      tag: test
+      sync: true
+      steps:
+          - id: add
+            handler: index.add
+
+    - method: changeItemStatus
+      tag: test
+      sync: true
+      steps:
+          - id: changeItemStatus
+            handler: index.changeItemStatus            
+
+    - method: remove
+      tag: test
+      sync: true
+      steps:
+          - id: remove
+            handler: index.remove   
